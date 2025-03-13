@@ -1,13 +1,13 @@
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
-from langchain.agents import AgentExecutor, create_tool_calling_agent
-from langchain_core.output_parsers import StrOutputParser
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_core.tools import tool, StructuredTool
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder   # type: ignore
+from langchain_core.messages import HumanMessage, SystemMessage, AIMessage  # type: ignore
+from langchain.agents import AgentExecutor, create_tool_calling_agent  # type: ignore
+from langchain_core.output_parsers import StrOutputParser  # type: ignore
+from langchain_google_genai import ChatGoogleGenerativeAI  # type: ignore
+from langchain_core.tools import tool, StructuredTool  # type: ignore
 # from langchain.schema.runnable import RunnableBranch
-from dotenv import load_dotenv
+from dotenv import load_dotenv  # type: ignore
 from datetime import date
-import yfinance as yf
+import yfinance as yf # type: ignore
 import os
 
 load_dotenv()
@@ -202,8 +202,8 @@ tools = [
     stock_grade_updrages_downgrades,
     stock_news,
     stock_compare,
-    calculate_profit_loss,
-    expected_return,
+    # calculate_profit_loss,
+    # expected_return,
     last_n_years_dividends
 ]
 
