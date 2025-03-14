@@ -10,3 +10,5 @@ ipykernel
 langchainhub
 yfinance
 plotly
+firebase
+firebase_admin

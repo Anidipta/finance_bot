@@ -1,4 +1,3 @@
-
 import plotly.graph_objects as go
 from yfinance import Ticker
 import pandas as pd
