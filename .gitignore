@@ -64,3 +64,5 @@ package-lock.json
 # Ignore Docker and Kubernetes files
 docker-compose.override.yml
 .kube/
+
+venv
