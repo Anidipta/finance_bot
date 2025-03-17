@@ -12,3 +12,6 @@ yfinance
 plotly
 firebase
 firebase_admin
+fastapi
+uvicorn
+bcrypt

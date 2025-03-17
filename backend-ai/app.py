@@ -216,6 +216,7 @@ def expected_return(ticker: str, purchase_price: float, quantity: int, target_pr
         "percentage_change": percentage_change
     }
 
+@tool
 def stock_performance_analysis(ticker: str, period: str = "1y") -> dict:
     """
     Analyze the historical performance of a stock over a specified period.
