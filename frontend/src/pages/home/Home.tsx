@@ -1,16 +1,23 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { getGeminiResponse } from "../../hooks/useGetResponse";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { Mic, MicOff, Send } from "lucide-react";
 
 interface Message {
   text: string;
   sender: "user" | "bot";
 }
 
+interface SpeechRecognitionEvent extends Event {
+  results: SpeechRecognitionResultList;
+}
+
 const Home = () => {
   const [input, setInput] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<SpeechRecognitionEvent | null>(null);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -32,6 +39,34 @@ const Home = () => {
     setInput("");
   };
 
+  const startListening = () => {
+    if (!("webkitSpeechRecognition" in window)) {
+      alert("Your browser does not support voice recognition.");
+      return;
+    }
+
+    const recognition = new (window as any).webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = "en-US";
+
+    recognition.onstart = () => setIsListening(true);
+    recognition.onend = () => setIsListening(false);
+
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
+      const transcript = event.results[0][0].transcript;
+      setInput(transcript);
+    };
+
+    recognition.onerror = (event: SpeechRecognitionEvent) => {
+      console.error("Speech recognition error:", event);
+      setIsListening(false);
+    };
+
+    recognition.start();
+    recognitionRef.current = recognition;
+  };
+
   return (
     <div className="flex justify-center items-center h-screen bg-gray-900 text-white">
       <div className="w-full max-w-md bg-gray-800 p-6 rounded-lg shadow-lg">
@@ -50,7 +85,7 @@ const Home = () => {
           ))}
         </div>
 
-        {/* Input Field */}
+        {/* Input Field & Voice Input */}
         <div className="mt-4 flex">
           <input
             type="text"
@@ -60,10 +95,13 @@ const Home = () => {
             placeholder="Ask something..."
           />
           <button
-            onClick={handleSend}
-            className="p-2 bg-blue-500 rounded-r hover:bg-blue-600 transition"
+            onClick={startListening}
+            className={`p-2 ${isListening ? "bg-red-500" : "bg-gray-600"} rounded`}
           >
-            Send
+            {isListening ? <MicOff size={20} /> : <Mic size={20} />}
+          </button>
+          <button onClick={handleSend} className="p-2 bg-blue-500 rounded-r hover:bg-blue-600 transition">
+            <Send size={20} />
           </button>
         </div>
       </div>
