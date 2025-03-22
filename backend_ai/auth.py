@@ -2,7 +2,6 @@ from firebase_admin import auth
 from fastapi import HTTPException, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from typing import Dict, Any
-import jwt  # Ensure to install the 'pyjwt' package
 import bcrypt
 
 security = HTTPBearer()
