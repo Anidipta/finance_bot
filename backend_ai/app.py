@@ -4,16 +4,12 @@ from pydantic import BaseModel
 from typing import Optional, Dict, Any
 import sys
 import os
-from passlib.context import CryptContext
-from firebase_admin import auth
+from backend_ai import model, auth
+from backend_ai.model_config import initialize_models
+from backend_ai.database import FirestoreDB, User, Chat
 
 # Add the parent directory to sys.path to make absolute imports work
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-# Absolute imports 
-from backend_ai import model, auth as custom_auth
-from backend_ai.model_config import initialize_models
-from backend_ai.database import FirestoreDB, User # Chat
 
 app = FastAPI()
 
@@ -51,17 +47,19 @@ async def create_user(request: CreateUserRequest):
         firebase_user = auth.create_user(
             email=request.email,
             password=request.password,
-            display_name=request.name
+            display_name=request.name,
         )
         
         # Hash the password (if you want to store it separately in your Firestore for other reasons)
-        hashed_password = custom_auth.hash_password(request.password)
+        hashed_password = auth.hash_password(request.password)
         
         # Create the user in your Firestore. Map Firebase's uid to the required "id" field.
         new_user = User(
+            id=firebase_user.uid,  # Assign Firebase's uid to the required "id" field.
             name=request.name,
             email=request.email,
-            password=hashed_password
+            password=hashed_password,
+            chatStreams=[]
         )
         
         await FirestoreDB.create_user(new_user)
@@ -71,80 +69,80 @@ async def create_user(request: CreateUserRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# @app.post("/api/chat-streams")
-# async def create_chat_stream(user=Depends(custom_auth.verify_token)):
-#     try:
-#         stream_id = await FirestoreDB.create_chat_stream(user['uid'])
-#         return {"stream_id": stream_id}
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
+@app.post("/api/chat-streams")
+async def create_chat_stream(user=Depends(auth.verify_token)):
+    try:
+        stream_id = await FirestoreDB.create_chat_stream(user['uid'])
+        return {"stream_id": stream_id}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-# @app.post("/api/chat")
-# async def chat_endpoint(request: ChatRequest, user=Depends(custom_auth.verify_token)):
-#     try:
-#         user_chat = Chat(
-#             sender="user",
-#             message=request.message
-#         )
+@app.post("/api/chat")
+async def chat_endpoint(request: ChatRequest, user=Depends(auth.verify_token)):
+    try:
+        user_chat = Chat(
+            sender="user",
+            message=request.message
+        )
         
-#         await FirestoreDB.add_chat_to_stream(request.stream_id, user_chat)
+        await FirestoreDB.add_chat_to_stream(request.stream_id, user_chat)
         
-#         response = await model.process_chat(request.message, user['uid'])
+        response = await model.process_chat(request.message, user['uid'])
         
-#         ai_chat = Chat(
-#             sender="model",
-#             message=response
-#         )
-#         await FirestoreDB.add_chat_to_stream(request.stream_id, ai_chat)
+        ai_chat = Chat(
+            sender="model",
+            message=response
+        )
+        await FirestoreDB.add_chat_to_stream(request.stream_id, ai_chat)
         
-#         return {
-#             "response": response,
-#             "chat": ai_chat.dict()
-#         }
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
+        return {
+            "response": response,
+            "chat": ai_chat.dict()
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-# @app.get("/api/portfolio/{user_id}")
-# async def get_portfolio(user_id: str, user=Depends(custom_auth.verify_token)):
-#     try:
-#         portfolio = await model.get_user_portfolio(user_id)
-#         return portfolio
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
+@app.get("/api/portfolio/{user_id}")
+async def get_portfolio(user_id: str, user=Depends(auth.verify_token)):
+    try:
+        portfolio = await model.get_user_portfolio(user_id)
+        return portfolio
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-# @app.post("/api/portfolio/analyze")
-# async def analyze_portfolio(request: PortfolioRequest, user=Depends(custom_auth.verify_token)):
-#     try:
-#         analysis = await model.analyze_stock_position(
-#             ticker=request.ticker,
-#             quantity=request.quantity,
-#             purchase_price=request.purchase_price
-#         )
-#         return analysis
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
+@app.post("/api/portfolio/analyze")
+async def analyze_portfolio(request: PortfolioRequest, user=Depends(auth.verify_token)):
+    try:
+        analysis = await model.analyze_stock_position(
+            ticker=request.ticker,
+            quantity=request.quantity,
+            purchase_price=request.purchase_price
+        )
+        return analysis
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-# @app.get("/api/chat-streams/{user_id}")
-# async def get_user_chat_streams(user_id: str, user=Depends(custom_auth.verify_token)):
-#     try:
-#         if user['uid'] != user_id:
-#             raise HTTPException(status_code=403, detail="Not authorized")
+@app.get("/api/chat-streams/{user_id}")
+async def get_user_chat_streams(user_id: str, user=Depends(auth.verify_token)):
+    try:
+        if user['uid'] != user_id:
+            raise HTTPException(status_code=403, detail="Not authorized")
         
-#         streams = await FirestoreDB.get_user_chat_streams(user_id)
-#         return {"streams": [stream.dict() for stream in streams]}
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
+        streams = await FirestoreDB.get_user_chat_streams(user_id)
+        return {"streams": [stream.dict() for stream in streams]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-# @app.get("/api/chat-streams/{stream_id}/chats")
-# async def get_chat_stream(stream_id: str, user=Depends(custom_auth.verify_token)):
-#     try:
-#         stream = await FirestoreDB.get_chat_stream(stream_id)
-#         if not stream:
-#             raise HTTPException(status_code=404, detail="Chat stream not found")
+@app.get("/api/chat-streams/{stream_id}/chats")
+async def get_chat_stream(stream_id: str, user=Depends(auth.verify_token)):
+    try:
+        stream = await FirestoreDB.get_chat_stream(stream_id)
+        if not stream:
+            raise HTTPException(status_code=404, detail="Chat stream not found")
         
-#         if stream.userId != user['uid']:
-#             raise HTTPException(status_code=403, detail="Not authorized")
+        if stream.userId != user['uid']:
+            raise HTTPException(status_code=403, detail="Not authorized")
         
-#         return {"chats": [chat.dict() for chat in stream.chats]}
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
+        return {"chats": [chat.dict() for chat in stream.chats]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
