@@ -2,10 +2,10 @@ import { Link } from "react-router-dom"
 
 const About = () => {
 	return (
-		<div id="about" className="mt-10 w-full items-center justify-center p-4">
+		<div id="about" className="-mt-8 w-full items-center justify-center p-4">
 			<div className="w-full flex flex-col gap-1 items-center justify-center">
 				<h1 className="text-[39px] lg:text-[50px] text-secondary">About</h1>
-				<p className="text-subhead">What We Do is What we Are!</p>
+				<p className="text-subhead">What is FinGPT? Know about Us!</p>
 			</div>
 
 			<div className="flex flex-col lg:flex-row gap-4 lg:gap-8 mt-10 items-center justify-center">
