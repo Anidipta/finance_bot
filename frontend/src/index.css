@@ -40,6 +40,16 @@
     @apply rounded-lg py-1.5 px-3 bg-transparent border-2 outline-none text-gray-200 placeholder:text-gray-500
 }
 
+.glassmorphic {
+    @apply bg-white/5 backdrop-blur-lg shadow-md border border-white/30 rounded-lg
+}
+
+.glassmorphic-2 {
+    @apply bg-black/5 backdrop-blur-lg border border-white/40 active:ring-2 active:ring-blue-400
+}
+
+
+
 ::-webkit-scrollbar {
     width: 10.2px;
 }
