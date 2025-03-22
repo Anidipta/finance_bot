@@ -66,4 +66,4 @@ docker-compose.override.yml
 .kube/
 
 venv
-backend-ai\gdg-25-firebase-adminsdk-fbsvc-1d7d00c3ee.json
+backend-ai/gdg-25-firebase-adminsdk-fbsvc-1d7d00c3ee.json

@@ -1,16 +1,24 @@
+import sys
+import os
 
+# Add the parent directory to sys.path to make absolute imports work
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from langchain.agents import tool
 from yfinance import Ticker
 from typing import Dict, List, Any
 from datetime import date
 from google.cloud import firestore
-from .config import db
+from backend_ai.config import db
 
+@tool
 def company_information(ticker: str) -> dict:
     """Use this tool to retrieve company information like address, industry, sector, company officers, business summary, website, marketCap, current price, ebitda, total debt, total revenue, debt-to-equity, etc."""
     ticker_obj = Ticker(ticker)
     ticker_info = ticker_obj.get_info()
     return ticker_info
 
+@tool
 def last_dividend_and_earnings_date(ticker: str) -> dict:
     """
     Use this tool to retrieve company's last dividend date and earnings release dates.
@@ -19,6 +27,7 @@ def last_dividend_and_earnings_date(ticker: str) -> dict:
     ticker_obj = Ticker(ticker)
     return ticker_obj.get_calendar()
 
+@tool
 def summary_of_mutual_fund_holders(ticker: str) -> dict:
     """
     Use this tool to retrieve company's top mutual fund holders. 
@@ -28,6 +37,7 @@ def summary_of_mutual_fund_holders(ticker: str) -> dict:
     mf_holders = ticker_obj.get_mutualfund_holders()
     return mf_holders.to_dict(orient="records")
 
+@tool
 def summary_of_institutional_holders(ticker: str) -> dict:
     """
     Use this tool to retrieve company's top institutional holders. 
@@ -37,6 +47,7 @@ def summary_of_institutional_holders(ticker: str) -> dict:
     inst_holders = ticker_obj.get_institutional_holders()
     return inst_holders.to_dict(orient="records")
 
+@tool
 def stock_grade_updrages_downgrades(ticker: str) -> dict:
     """
     Use this to retrieve grade ratings upgrades and downgrades details of particular stock.
@@ -49,6 +60,7 @@ def stock_grade_updrages_downgrades(ticker: str) -> dict:
     upgrades_downgrades = upgrades_downgrades[upgrades_downgrades["Action"].isin(["up", "down"])]
     return upgrades_downgrades.to_dict(orient="records")
 
+@tool
 def stock_splits_history(ticker: str) -> dict:
     """
     Use this tool to retrieve company's historical stock splits data.
@@ -57,6 +69,7 @@ def stock_splits_history(ticker: str) -> dict:
     hist_splits = ticker_obj.get_splits()
     return hist_splits.to_dict()
 
+@tool
 def stock_news(ticker: str) -> dict:
     """
     Use this to retrieve latest news articles discussing particular stock ticker.
@@ -64,6 +77,7 @@ def stock_news(ticker: str) -> dict:
     ticker_obj = Ticker(ticker)
     return ticker_obj.get_news()
 
+@tool
 def stock_compare(ticker1: str, ticker2: str) -> dict:
     """
     Use this tool to compare two stock tickers.
@@ -75,6 +89,7 @@ def stock_compare(ticker1: str, ticker2: str) -> dict:
         ticker2: ticker2_obj.info
     }
 
+@tool
 def last_n_years_dividends(ticker: str, n: int) -> dict:
     """
     Use this tool to retrieve last n years of dividends data.
@@ -83,6 +98,7 @@ def last_n_years_dividends(ticker: str, n: int) -> dict:
     dividends = ticker_obj.dividends
     return dividends.tail(n).to_dict()
 
+@tool
 def calculate_profit_loss(ticker: str, purchase_price: float, quantity: int, current_price: float) -> dict:
     """
     Calculate the profit or loss for a given stock based on purchase price, quantity, and current price.
@@ -96,6 +112,7 @@ def calculate_profit_loss(ticker: str, purchase_price: float, quantity: int, cur
         "percentage_change": percentage_change
     }
 
+@tool
 def expected_return(ticker: str, purchase_price: float, quantity: int, target_price: float) -> dict:
     """
     Calculate the expected return for a given stock based on purchase price, quantity, and target price.
@@ -108,6 +125,7 @@ def expected_return(ticker: str, purchase_price: float, quantity: int, target_pr
         "percentage_change": percentage_change
     }
 
+@tool
 def stock_performance_analysis(ticker: str, period: str = "1y") -> dict:
     """
     Analyze the historical performance of a stock over a specified period.
@@ -126,6 +144,7 @@ def stock_performance_analysis(ticker: str, period: str = "1y") -> dict:
         "trend": trend
     }
 
+@tool
 def buy_sell_recommendation(ticker: str) -> dict:
     """
     Provide a basic recommendation on whether to buy or sell a stock using a moving average crossover strategy.
@@ -144,6 +163,7 @@ def buy_sell_recommendation(ticker: str) -> dict:
         "recommendation": recommendation
     }
 
+@tool
 def get_user_portfolio(user_id: str) -> dict:
     """
     Retrieve the user's portfolio from Firestore.
@@ -159,6 +179,7 @@ def get_user_portfolio(user_id: str) -> dict:
     except Exception as e:
         return {"error": str(e)}
 
+@tool
 def aggregate_market_data(tickers: list) -> dict:
     """
     Retrieve and aggregate market data for multiple stock tickers.

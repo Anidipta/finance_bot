@@ -1,28 +1,21 @@
+import sys
+import os
+
+# Add the parent directory to sys.path to make absolute imports work
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.output_parsers import StrOutputParser
-from firebase_admin import credentials, initialize_app
-from google.cloud import firestore
-from dotenv import load_dotenv
-from .tools import *
-import os
-
-load_dotenv()
-
-cred = credentials.Certificate(os.getenv("FIREBASE_CREDENTIALS_PATH"))
-firebase_app = initialize_app(cred)
-db = firestore.Client()
+from backend_ai.tools import *
 
 model = None
 market_finance_agent_executor = None
 personalized_finance_agent_executor = None
 classification_chain = None
 
-def initialize_models(input_model:str) -> str:
-    if not input_model:
-        input_model = "gemini-1.5-pro"
-
+def initialize_models(input_model="gemini-2.0-flash") -> str:
     #Initialize all required models, templates and chains
 
     global model, market_finance_agent_executor, personalized_finance_agent_executor, classification_chain

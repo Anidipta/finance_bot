@@ -1,8 +1,13 @@
+import sys
+import os
 
-from pydantic import BaseModel
+# Add the parent directory to sys.path to make absolute imports work
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from pydantic import BaseModel,Field
 from typing import List, Literal, Optional
 from datetime import datetime
-from .config import *
+from backend_ai.config import *
 
 class Chat(BaseModel):
     sender: Literal["user", "model"]
@@ -15,7 +20,7 @@ class ChatStream(BaseModel):
     chats: List[Chat] = []
 
 class User(BaseModel):
-    id: str
+    id: Optional[str] = Field(None, alias="uid")
     name: str
     email: str
     password: str  

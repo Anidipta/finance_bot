@@ -1,5 +1,12 @@
-from ..config import model, market_finance_agent_executor, personalized_finance_agent_executor, classification_chain
-from ..database import FirestoreDB
+import sys
+import os
+
+# Add the parent directory to sys.path to make absolute imports work
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# Change relative imports to absolute imports
+from backend_ai.model_config import model, market_finance_agent_executor, personalized_finance_agent_executor, classification_chain
+from backend_ai.database import FirestoreDB
 from langchain_core.messages import HumanMessage, AIMessage
 from typing import Optional, Dict, Any, List
 
@@ -71,7 +78,8 @@ async def handle_general_query(message: str) -> str:
 
 async def analyze_stock_position(ticker: str, quantity: int, purchase_price: float) -> Dict[str, Any]:
     """Analyze a stock position"""
-    from ..tools import calculate_profit_loss, stock_performance_analysis
+    # Import using absolute path
+    from backend_ai.tools import calculate_profit_loss, stock_performance_analysis
     
     current_data = await handle_market_query(f"Get current price for {ticker}")
     current_price = current_data.get("regularMarketPrice", 0)
@@ -82,4 +90,12 @@ async def analyze_stock_position(ticker: str, quantity: int, purchase_price: flo
         "current_price": current_price
     }
     
-    return analysis 
+    return analysis
+
+# Add this function as it seems to be used in app.py but wasn't defined
+async def get_user_portfolio(user_id: str) -> Dict[str, Any]:
+    """Get user portfolio data"""
+    try:
+        return await FirestoreDB.get_user_portfolio(user_id)
+    except Exception as e:
+        return {"error": str(e)}
