@@ -4,8 +4,8 @@ import { Toaster } from "react-hot-toast";
 import Landing from "./pages/landing/Landing";
 import Signup from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
-import Home from "./pages/home/Home";
 import ParticleBackground from "./components/ParticleBackground";
+import Chat from "./pages/chat/Chat";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/chat" element={<Chat />} />
         </Routes>
 
         <Toaster />

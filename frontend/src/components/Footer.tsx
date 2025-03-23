@@ -3,7 +3,7 @@ import { SiLeetcode } from "react-icons/si";
 
 const Footer = () => {
     return (
-        <footer className="glassmorphic py-4 z-10">
+        <footer className="glassmorphic !rounded-none py-4 z-10">
             <div className="max-w-screen-lg mx-auto px-6 text-center">
                 <div className="flex justify-center space-x-6 mb-4">
                     <a

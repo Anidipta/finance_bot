@@ -3,6 +3,7 @@ import { getGeminiResponse } from "../../hooks/useGetResponse";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Mic, MicOff, Send } from "lucide-react";
+import AppNavbar from "../../components/navbars/AppNavbar";
 
 interface Message {
   text: string;
@@ -13,7 +14,7 @@ interface SpeechRecognitionEvent extends Event {
   results: SpeechRecognitionResultList;
 }
 
-const Home = () => {
+const Chat = () => {
   const [input, setInput] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [isListening, setIsListening] = useState(false);
@@ -68,7 +69,9 @@ const Home = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-900 text-white">
+    <div className="flex justify-center items-center h-screen w-full">
+      <AppNavbar />
+      
       <div className="w-full max-w-md bg-gray-800 p-6 rounded-lg shadow-lg">
         {/* Chat Window */}
         <div className="h-80 overflow-y-auto space-y-2 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
@@ -109,4 +112,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Chat;
