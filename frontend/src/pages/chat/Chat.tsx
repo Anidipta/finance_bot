@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Mic, MicOff, Send } from "lucide-react";
 import AppNavbar from "../../components/navbars/AppNavbar";
+import Sidebar from "../../components/Sidebar";
 
 interface Message {
   text: string;
@@ -18,6 +19,7 @@ const Chat = () => {
   const [input, setInput] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [isListening, setIsListening] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const recognitionRef = useRef<SpeechRecognitionEvent | null>(null);
 
   const handleSend = async () => {
@@ -32,7 +34,7 @@ const Chat = () => {
     } catch (error) {
       setMessages((prev) => [
         ...prev,
-        { text: "⚠️ **Error:** Unable to fetch response.", sender: "bot" }
+        { text: "⚠️ **Error:** Unable to fetch response.", sender: "bot" },
       ]);
       console.log(error);
     }
@@ -60,7 +62,7 @@ const Chat = () => {
     };
 
     recognition.onerror = (event: SpeechRecognitionEvent) => {
-      console.error("Speech recognition error:", event);
+      console.log("Speech recognition error:", event);
       setIsListening(false);
     };
 
@@ -69,43 +71,72 @@ const Chat = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen w-full">
-      <AppNavbar />
-      
-      <div className="w-full max-w-md bg-gray-800 p-6 rounded-lg shadow-lg">
-        {/* Chat Window */}
-        <div className="h-80 overflow-y-auto space-y-2 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
-          {messages.map((msg, index) => (
-            <div
-              key={index}
-              className={`p-3 rounded-lg max-w-[80%] ${msg.sender === "user"
-                ? "ml-auto bg-blue-600 text-right"
-                : "mr-auto bg-gray-700 text-left"
-                }`}
-            >
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.text}</ReactMarkdown>
-            </div>
-          ))}
-        </div>
+    <div className="flex h-screen max-h-screen w-full text-white bg-black overflow-hidden">
+      <AppNavbar
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
 
-        {/* Input Field & Voice Input */}
-        <div className="mt-4 flex">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="flex-1 p-2 rounded-l bg-gray-700 border border-gray-600 focus:outline-none"
-            placeholder="Ask something..."
-          />
-          <button
-            onClick={startListening}
-            className={`p-2 ${isListening ? "bg-red-500" : "bg-gray-600"} rounded`}
-          >
-            {isListening ? <MicOff size={20} /> : <Mic size={20} />}
-          </button>
-          <button onClick={handleSend} className="p-2 bg-blue-500 rounded-r hover:bg-blue-600 transition">
-            <Send size={20} />
-          </button>
+      {isSidebarOpen && (
+        <div className="bg-gray-900 border-r border-gray-700 mt-20 z-10">
+          <Sidebar />
+        </div>
+      )}
+
+      <div className="flex flex-col flex-1 mt-20 md:px-4 z-10">
+        <div className="flex flex-col flex-1 overflow-hidden">
+          {/* Chat Window */}
+          <div className="flex-1 overflow-y-auto px-6 space-y-4 scrollbar-thin scrollbar-thumb-gray-700 pb-10">
+            {messages.length === 0 ? (
+              <div className="flex items-center justify-center h-full">
+                <div className="text-gray-400 text-center">
+                  <p className="text-xl mb-2">Welcome to FinGPT</p>
+                  <p className="text-sm">Ask me anything related to finance...</p>
+                </div>
+              </div>
+            ) : (
+              messages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={`max-w-[90%] p-4 rounded-lg shadow-md ${msg.sender === "user"
+                    ? "ml-auto bg-blue-600 text-right lg:max-w-[35%] md:max-w-[45%]"
+                    : "mr-auto bg-gray-700 text-left lg:max-w-[40%] md:max-w-[65%]"
+                    }`}
+                >
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {msg.text}
+                  </ReactMarkdown>
+                </div>
+              ))
+            )}
+          </div>
+
+          {/* Input Field & Voice Input */}
+          <div className="p-4 bg-gray-800 flex items-center gap-2 border-t border-gray-700">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="flex-1 p-3 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Ask something..."
+              onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+            />
+            <button
+              onClick={startListening}
+              className={`p-3 rounded-lg ${isListening ? "bg-red-500" : "bg-gray-600 hover:bg-gray-500"
+                } transition-colors`}
+              title={isListening ? "Stop listening" : "Start voice input"}
+            >
+              {isListening ? <MicOff size={22} /> : <Mic size={22} />}
+            </button>
+            <button
+              onClick={handleSend}
+              className="p-3 bg-blue-500 rounded-lg hover:bg-blue-600 transition-colors"
+              title="Send message"
+            >
+              <Send size={22} />
+            </button>
+          </div>
         </div>
       </div>
     </div>
