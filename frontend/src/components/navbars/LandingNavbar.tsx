@@ -15,7 +15,7 @@ const LandingNavbar = () => {
 		{
 			name: "Services",
 			icon: <VscWorkspaceTrusted />,
-			link: "#companies",
+			link: "#services",
 		},
 		{
 			name: "Contact",
@@ -25,7 +25,7 @@ const LandingNavbar = () => {
 		{
 			name: "Login",
 			icon: <MdOutlineLogin />,
-			link: "/applicant/login",
+			link: "/login",
 		},
 	];
 
