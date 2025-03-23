@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BiSolidEdit } from "react-icons/bi";
-import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
+import { TbLayoutSidebarLeftCollapse, TbLayoutSidebarRightCollapse } from "react-icons/tb";
 import { FaChevronDown } from "react-icons/fa";
 
 interface DropDownProps {
@@ -9,7 +9,12 @@ interface DropDownProps {
 	description: string;
 }
 
-const AppNavbar = () => {
+interface AppNavbarProps {
+	isSidebarOpen: boolean;
+	setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const AppNavbar = ({ isSidebarOpen, setIsSidebarOpen }: AppNavbarProps) => {
 	const dropdownOptions = [
 		{
 			id: "Gemini-2.0 flash",
@@ -35,8 +40,12 @@ const AppNavbar = () => {
 	return (
 		<div className="py-2 px-4 fixed left-0 top-0 w-full text-white flex items-center justify-between bg-transparent z-20">
 			<div className="flex items-center gap-2 md:gap-4 lg:gap-6">
-				<button className="border-none outline-none bg-transparent cursor-pointer text-xl md:text-2xl hover:bg-gray-700 p-1.5 md:p-2 rounded-md flex items-center justify-center">
-					<TbLayoutSidebarLeftCollapse />
+				<button className="border-none outline-none bg-transparent cursor-pointer text-xl md:text-2xl hover:bg-gray-700 p-1.5 md:p-2 rounded-md flex items-center justify-center" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+					{isSidebarOpen ? (
+						<TbLayoutSidebarLeftCollapse />
+					) : (
+						<TbLayoutSidebarRightCollapse />
+					)}
 				</button>
 				<button className="border-none outline-none bg-transparent cursor-pointer text-xl md:text-2xl hover:bg-gray-700 p-1.5 md:p-2 rounded-md flex items-center justify-center">
 					<BiSolidEdit />
