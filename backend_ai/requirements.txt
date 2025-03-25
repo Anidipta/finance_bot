@@ -17,3 +17,5 @@ uvicorn
 bcrypt
 passlib
 pyjwt
+flask
+flask-socketio
