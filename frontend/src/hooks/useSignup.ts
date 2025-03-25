@@ -26,7 +26,7 @@ const useSignup = () => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${localStorage.getItem("FR-token")}`
+                    Authorization: `Bearer ${localStorage.getItem("FGPT-token")}`
                 },
                 body: JSON.stringify({
                     name,
