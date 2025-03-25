@@ -1,9 +1,3 @@
-import sys
-import os
-
-# Add the parent directory to sys.path to make absolute imports work
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -16,8 +10,6 @@ personalized_finance_agent_executor = None
 classification_chain = None
 
 def initialize_models(input_model="gemini-2.0-flash") -> str:
-    #Initialize all required models, templates and chains
-
     global model, market_finance_agent_executor, personalized_finance_agent_executor, classification_chain
     
     model = ChatGoogleGenerativeAI(
