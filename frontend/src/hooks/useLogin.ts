@@ -15,11 +15,11 @@ const useLogin = () => {
 
         setLoading(true);
         try {
-            const res = await fetch(`${apiUrl}/applicant/auth/login`, {
+            const res = await fetch(`${apiUrl}/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${localStorage.getItem("CZ-token")}`
+                    Authorization: `Bearer ${localStorage.getItem("FGPT-token")}`
                 },
                 body: JSON.stringify({ email, password })
             });
@@ -29,8 +29,8 @@ const useLogin = () => {
                 throw new Error(data.error)
             }
 
-            localStorage.setItem("CZ-token", data.token);
-            localStorage.setItem("CZ-user", JSON.stringify(data));
+            localStorage.setItem("FGPT-token", data.token);
+            localStorage.setItem("FGPT-user", JSON.stringify(data));
             setAuthUser(data);
 
             if (data) {
