@@ -13,7 +13,11 @@ __pycache__/
 
 # Ignore virtual environments
 venv/
+.venv/
 .env/
+*.venv/
+.venv/*
+.env/*
 .virtualenv/
 pip-log.txt
 pip-delete-this-directory.txt
@@ -62,6 +66,7 @@ package-lock.json
 *.swo
 *.bak
 *.tmp
+.venv
 
 # Ignore Docker and Kubernetes files
 docker-compose.override.yml

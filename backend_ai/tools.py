@@ -8,8 +8,6 @@ from langchain.agents import tool
 from yfinance import Ticker
 from typing import Dict, List, Any
 from datetime import date
-from google.cloud import firestore
-from backend_ai.config import db
 
 @tool
 def company_information(ticker: str) -> dict:
