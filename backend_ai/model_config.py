@@ -8,7 +8,7 @@ from langchain_core.output_parsers import StrOutputParser
 from tools import *
 
 # Initialize Google API key
-os.environ["GOOGLE_API_KEY"] = "AIzaSyAREm6mv3oEAwfldsZpoag6QHoH90w8gaY"
+os.environ["GOOGLE_API_KEY"] = os.getenv("GOOGLE_API_KEY")
 
 # Initialize Google Generative AI Model
 model = ChatGoogleGenerativeAI(
