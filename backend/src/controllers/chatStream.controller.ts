@@ -74,11 +74,12 @@ export const getMyChatStreams = async (req: Request, res: Response) => {
             return;
         }
 
-        const chatStreams = await ChatStream.find({ _id: { $in: user.chatStreams } }).select("_id header");
+        const chatStreams = await ChatStream.find({ _id: { $in: user.chatStreams } }).select("_id header createdAt");
 
         const formattedChatStreams = chatStreams.map(chat => ({
             id: chat._id,
             header: chat.header,
+            createdAt: chat.createdAt
         }));
 
         res.status(200).json(formattedChatStreams);

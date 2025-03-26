@@ -24,3 +24,29 @@ export interface AuthContextType {
 export interface AuthContextProviderProps {
     children: ReactNode;
 }
+
+export interface ChatHistory {
+    id: string;
+    header: string;
+    createdAt: string;
+}
+
+export interface ChatProps {
+    sender: "user" | "agent";
+    message: string;
+}
+
+export interface Chats {
+    sender: "user" | "agent";
+    message: string;
+    _id: string;
+}
+
+export interface Messages {
+    _id: string;
+    userId: string;
+    chats: Chats[];
+    header: string;
+    createdAt: string;
+    updatedAt: string;
+}

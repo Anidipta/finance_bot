@@ -5,11 +5,7 @@ import remarkGfm from "remark-gfm";
 import { Mic, MicOff, Send } from "lucide-react";
 import AppNavbar from "../../components/navbars/AppNavbar";
 import Sidebar from "../../components/Sidebar";
-
-interface Message {
-  text: string;
-  sender: "user" | "bot";
-}
+import { ChatProps, Messages } from "../../types";
 
 interface SpeechRecognitionEvent extends Event {
   results: SpeechRecognitionResultList;
@@ -17,7 +13,14 @@ interface SpeechRecognitionEvent extends Event {
 
 const Chat = () => {
   const [input, setInput] = useState<string>("");
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Messages>({
+    _id: "",
+    userId: "",
+    chats: [],
+    header: "",
+    createdAt: "",
+    updatedAt: ""
+  });
   const [isListening, setIsListening] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const recognitionRef = useRef<SpeechRecognitionEvent | null>(null);
@@ -25,17 +28,31 @@ const Chat = () => {
   const handleSend = async () => {
     if (!input.trim()) return;
 
-    const userMessage: Message = { text: input, sender: "user" };
-    setMessages((prev) => [...prev, userMessage]);
+    const userMessage: ChatProps = { message: input, sender: "user" };
+    setMessages(prev => ({
+      ...prev,
+      chats: [...(prev.chats || []), { ...userMessage, _id: Date.now().toString() }]
+    }));
 
     try {
       const botReply = await getGeminiResponse(input);
-      setMessages((prev) => [...prev, { text: botReply, sender: "bot" }]);
-    } catch (error) {
-      setMessages((prev) => [
+      setMessages(prev => ({
         ...prev,
-        { text: "⚠️ **Error:** Unable to fetch response.", sender: "bot" },
-      ]);
+        chats: [...(prev.chats || []), { 
+          message: botReply, 
+          sender: "agent", 
+          _id: Date.now().toString() 
+        }]
+      }));
+    } catch (error) {
+      setMessages(prev => ({
+        ...prev,
+        chats: [...(prev.chats || []), { 
+          message: "⚠️ **Error:** Unable to fetch response.", 
+          sender: "agent", 
+          _id: Date.now().toString() 
+        }]
+      }));
       console.log(error);
     }
 
@@ -79,7 +96,9 @@ const Chat = () => {
 
       {isSidebarOpen && (
         <div className="bg-gray-900 border-r border-gray-700 mt-20 z-10">
-          <Sidebar />
+          <Sidebar
+            setMessages={setMessages}
+          />
         </div>
       )}
 
@@ -87,7 +106,7 @@ const Chat = () => {
         <div className="flex flex-col flex-1 overflow-hidden">
           {/* Chat Window */}
           <div className="flex-1 overflow-y-auto px-6 space-y-4 scrollbar-thin scrollbar-thumb-gray-700 pb-10">
-            {messages.length === 0 ? (
+            {messages.chats.length === 0 ? (
               <div className="flex items-center justify-center h-full">
                 <div className="text-gray-400 text-center">
                   <p className="text-xl mb-2">Welcome to FinGPT</p>
@@ -95,16 +114,16 @@ const Chat = () => {
                 </div>
               </div>
             ) : (
-              messages.map((msg, index) => (
+              messages.chats.map((msg) => (
                 <div
-                  key={index}
+                  key={msg._id}
                   className={`max-w-[90%] p-4 rounded-lg shadow-md ${msg.sender === "user"
                     ? "ml-auto bg-blue-600 text-right lg:max-w-[35%] md:max-w-[45%]"
-                    : "mr-auto bg-gray-700 text-left lg:max-w-[40%] md:max-w-[65%]"
+                    : "mr-auto bg-gray-700 text-left lg:max-w-[40%]"
                     }`}
                 >
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                    {msg.text}
+                    {msg.message}
                   </ReactMarkdown>
                 </div>
               ))
