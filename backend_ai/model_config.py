@@ -7,11 +7,11 @@ import os
 
 # Set Google API Key
 os.environ["GOOGLE_API_KEY"] = "your api key"
-
 model = None
 market_finance_agent_executor = None
 personalized_finance_agent_executor = None
 classification_chain = None
+
 
 def initialize_models(input_model="gemini-2.0-flash") -> dict:
     global model, market_finance_agent_executor, personalized_finance_agent_executor, classification_chain
@@ -95,6 +95,7 @@ def initialize_models(input_model="gemini-2.0-flash") -> dict:
         "classification_chain": classification_chain,
         "general_chain": general_chain
     }
+
 
 # Automatically initialize models when the module is imported
 initialize_models()
