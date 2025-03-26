@@ -6,6 +6,10 @@ const ChatStreamSchema = new mongoose.Schema({
         ref: "Users",
         required: true
     },
+    header: {
+        type: String,
+        min: 1
+    },
     chats: [
         {
             sender: {
