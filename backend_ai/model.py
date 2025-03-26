@@ -1,24 +1,24 @@
 import os
 import sys
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from .model_config import model, market_finance_agent_executor, personalized_finance_agent_executor, classification_chain
-from .database import FirestoreDB
-from langchain_core.messages import HumanMessage, AIMessage
 from typing import Optional, Dict, Any, List
 
-async def process_chat(message: str, user_id: str, email: Optional[str] = None) -> str:
+from model_config import model, market_finance_agent_executor, personalized_finance_agent_executor, classification_chain
+from langchain_core.messages import HumanMessage, AIMessage
+
+# Import all tools from the tools file
+from tools import (
+    company_information,
+    calculate_profit_loss,
+    stock_performance_analysis
+)
+
+async def process_chat(message: str, user_id: str='123', email: Optional[str] = None) -> str:
     """Process chat messages and return AI response"""
-    # Get chat history
-    chat_history = await FirestoreDB.get_chat_history(user_id)
+    # Dummy chat history for testing
+    chat_history = []
     
     # Convert chat history to LangChain message format
-    formatted_history = [
-        HumanMessage(content=chat["message"]) if i % 2 == 0 
-        else AIMessage(content=chat["response"])
-        for i, chat in enumerate(chat_history)
-    ]
+    formatted_history = []
 
     # Classify intent
     intent = classification_chain.invoke({
@@ -34,11 +34,8 @@ async def process_chat(message: str, user_id: str, email: Optional[str] = None) 
         response = await handle_personalized_query(message, user_id)
     else:
         response = await handle_general_query(message)
-
-    # Store chat in database
-    await FirestoreDB.store_chat(user_id, email, message, response)
     
-    return response
+    return [intent,response]
 
 async def handle_market_query(message: str) -> str:
     """Handle market data related queries"""
@@ -50,11 +47,11 @@ async def handle_market_query(message: str) -> str:
     except Exception as e:
         return f"Error processing market query: {str(e)}"
 
-async def handle_personalized_query(message: str, user_id: str) -> str:
+async def handle_personalized_query(message: str, user_id: str='123') -> str:
     """Handle personalized advice queries"""
     try:
-        # Get user portfolio for context
-        portfolio = await FirestoreDB.get_user_portfolio(user_id)
+        # Add a mock portfolio for testing
+        portfolio = {"stocks": ["AAPL", "GOOGL"], "cash": 10000}
         
         # Add portfolio context to message
         contextualized_message = f"User portfolio: {portfolio}\n\nQuery: {message}"
@@ -75,16 +72,38 @@ async def handle_general_query(message: str) -> str:
         return f"Error processing general query: {str(e)}"
 
 async def analyze_stock_position(ticker: str, quantity: int, purchase_price: float) -> Dict[str, Any]:
-    """Analyze a stock position"""
-    from .tools import calculate_profit_loss, stock_performance_analysis
-    
-    current_data = await handle_market_query(f"Get current price for {ticker}")
-    current_price = current_data.get("regularMarketPrice", 0)
-    
-    analysis = {
-        "profit_loss": calculate_profit_loss(ticker, purchase_price, quantity, current_price),
-        "performance": stock_performance_analysis(ticker),
-        "current_price": current_price
-    }
-    
-    return analysis 
+    """Analyze a stock position using tools"""
+    try:
+        # Get company information to fetch current price
+        company_info = company_information(ticker)
+        current_price = company_info.get('regularMarketPrice', purchase_price)
+        
+        # Calculate profit/loss
+        profit_loss_analysis = calculate_profit_loss(
+            ticker, 
+            purchase_price, 
+            quantity, 
+            current_price
+        )
+        
+        # Get stock performance
+        performance_analysis = stock_performance_analysis(ticker)
+        
+        # Combine analyses
+        analysis = {
+            "profit_loss": profit_loss_analysis,
+            "performance": performance_analysis,
+            "current_price": current_price,
+            "company_info": {
+                "name": company_info.get('longName'),
+                "sector": company_info.get('sector'),
+                "industry": company_info.get('industry')
+            }
+        }
+        
+        return analysis
+    except Exception as e:
+        return {
+            "error": f"Error analyzing stock position: {str(e)}",
+            "ticker": ticker
+        }
