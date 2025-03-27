@@ -12,7 +12,8 @@ export const createChatStream = async (req: Request, res: Response) => {
         }
 
         const newChatStream = new ChatStream({
-            userId
+            userId,
+            chats: []
         });
 
         if (newChatStream) {
@@ -45,7 +46,7 @@ export const appendChats = async (req: Request, res: Response) => {
         }
 
         if (chatStream.chats.length === 0) {
-            chatStream.header = message;
+            chatStream.header = message || "New Chat";
         }
 
         chatStream.chats.push({
@@ -54,7 +55,7 @@ export const appendChats = async (req: Request, res: Response) => {
         });
         await chatStream.save();
 
-        res.status(200).json(chatStream);
+        res.status(200).json(chatStream.chats.reverse()[0]);
     } catch (error) {
         console.log("Error in appendChats controller", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -89,10 +90,10 @@ export const getMyChatStreams = async (req: Request, res: Response) => {
     }
 }
 
-export const getChatStreamById = async(req: Request, res: Response) => {
+export const getChatStreamById = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
-        if(!id) {
+        if (!id) {
             res.status(400).json({ error: "User ID is required" });
             return;
         }

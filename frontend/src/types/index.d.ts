@@ -32,6 +32,7 @@ export interface ChatHistory {
 }
 
 export interface ChatProps {
+    id: string;
     sender: "user" | "agent";
     message: string;
 }
