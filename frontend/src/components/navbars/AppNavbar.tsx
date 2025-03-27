@@ -2,6 +2,8 @@ import { useState } from "react";
 import { BiSolidEdit } from "react-icons/bi";
 import { TbLayoutSidebarLeftCollapse, TbLayoutSidebarRightCollapse } from "react-icons/tb";
 import { FaChevronDown } from "react-icons/fa";
+import { useAuthContext } from "../../context/AuthContext";
+import getAuthInitials from "../../utils/getAuthInitials";
 
 interface DropDownProps {
 	id: string;
@@ -30,6 +32,7 @@ const AppNavbar = ({ isSidebarOpen, setIsSidebarOpen }: AppNavbarProps) => {
 
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [selectedOption, setSelectedOption] = useState<DropDownProps>(dropdownOptions[1]);
+	const { authUser } = useAuthContext();
 
 	const handleSelect = (option: DropDownProps) => {
 		setSelectedOption(option);
@@ -65,7 +68,7 @@ const AppNavbar = ({ isSidebarOpen, setIsSidebarOpen }: AppNavbarProps) => {
 					</button>
 
 					{isDialogOpen && (
-						<div className="absolute left-0 mt-2 min-w-[220px] w-max bg-gray-900 border border-gray-700 rounded-lg shadow-lg">
+						<div className="absolute left-0 mt-2 min-w-[180px] md:min-w-[220px] w-max bg-gray-900 border border-gray-700 rounded-lg shadow-lg">
 							<div className="p-3 flex flex-col gap-2">
 								{dropdownOptions.map((option) => (
 									<div
@@ -87,7 +90,7 @@ const AppNavbar = ({ isSidebarOpen, setIsSidebarOpen }: AppNavbarProps) => {
 			</div>
 
 			<div className="rounded-full bg-pink-500 p-2">
-				<h1 className="text-sm md:text-2xl font-semibold">TD</h1>
+				<h1 className="text-sm md:text-2xl font-semibold">{getAuthInitials(authUser?.name)}</h1>
 			</div>
 		</div>
 	);

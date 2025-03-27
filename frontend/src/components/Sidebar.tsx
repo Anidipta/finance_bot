@@ -11,7 +11,7 @@ interface SidebarProps {
 const Sidebar = ({ setMessages }: SidebarProps) => {
 	const [history, setHistory] = useState<ChatHistory[]>([]);
 	const { loading, chatHistory } = useGetMyChatHistory();
-	const { loading: chatLoading, chat } = useGetChatById();
+	const { chat } = useGetChatById();
 
 	const getChatHistory = async () => {
 		const data = await chatHistory();
@@ -52,7 +52,7 @@ const Sidebar = ({ setMessages }: SidebarProps) => {
 							{todayChats.map(chat => (
 								<button
 									key={chat.id}
-									className="w-full text-left p-2 bg-gray-800 rounded-md hover:bg-gray-700 mt-2 truncate"
+									className="w-full text-left p-2 bg-gray-800 rounded-md hover:bg-gray-700 mt-2 truncate cursor-pointer"
 									title={chat.header}
 									onClick={() => {
 										fetchChat(chat.id);
@@ -72,7 +72,7 @@ const Sidebar = ({ setMessages }: SidebarProps) => {
 								{allChats.map(chat => (
 									<button
 										key={chat.id}
-										className="w-full text-left p-2 rounded-md hover:bg-gray-700 truncate"
+										className="w-full text-left p-2 rounded-md hover:bg-gray-700 truncate cursor-pointer"
 										title={chat.header}
 										onClick={() => {
 											fetchChat(chat.id);

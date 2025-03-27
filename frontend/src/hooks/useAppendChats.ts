@@ -1,20 +1,25 @@
 import { useState } from "react"
 import toast from "react-hot-toast";
+import { ChatProps } from "../types";
 
-const useGetResponse = () => {
+const useAppendChats = () => {
     const [loading, setLoading] = useState(false);
-    const apiUrl = import.meta.env.VITE_ML_URL;
+    const apiUrl = import.meta.env.VITE_API_URL;
 
-    const getResponse = async (message: string) => {
+    const append = async ({ id, sender, message }: ChatProps) => {
+        const success = handleInputErrors({ id, sender, message });
+
+        if (!success) return;
+
         setLoading(true);
         try {
-            const res = await fetch(`${apiUrl}/chat`, {
+            const res = await fetch(`${apiUrl}/chat-stream/agent-chat/${id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${localStorage.getItem("FGPT-token")}`
                 },
-                body: JSON.stringify({message})
+                body: JSON.stringify({ sender, message })
             });
             const data = await res.json();
 
@@ -37,7 +42,22 @@ const useGetResponse = () => {
         }
     }
 
-    return { loading, getResponse }
+    return { loading, append }
 }
 
-export default useGetResponse;
+export default useAppendChats;
+
+
+function handleInputErrors({ id, sender, message }: ChatProps) {
+    if (!sender || !message || !id) {
+        toast.error("Error in sending message");
+        return false;
+    }
+
+    if (sender !== "user" && sender !== "agent") {
+        toast.error("Error in sending message");
+        return false;
+    }
+
+    return true;
+}
