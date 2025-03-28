@@ -58,7 +58,7 @@ const ApplicantLogin = () => {
                 />
                 <button
                   type="button"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 mr-1.5 text-gray-400 hover:text-gray-600"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 mr-1.5 text-gray-400 hover:text-gray-600 cursor-pointer"
                   onClick={togglePasswordVisibility}
                 >
                   {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
@@ -68,7 +68,7 @@ const ApplicantLogin = () => {
 
             <div className="flex items-start justify-center p-2 w-full">
               <button className="btn-submit w-full lg:w-[90%]" type="submit" disabled={loading}>
-                {loading ? <Spinner /> : "Login"}
+                {loading ? <Spinner size="small" /> : "Login"}
               </button>
             </div>
 

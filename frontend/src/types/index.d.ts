@@ -10,7 +10,7 @@ export interface LoginParams {
 }
 
 export interface AuthUser {
-    uid: string;
+    _id: string;
     name: string;
     email: string;
     chatStreams: string[];
