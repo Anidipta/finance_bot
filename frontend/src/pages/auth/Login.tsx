@@ -29,7 +29,7 @@ const ApplicantLogin = () => {
       <div className="flex w-full items-center justify-center">
         <div className="flex overflow-hidden">
           <div className="hidden lg:flex items-center justify-center w-[450px] glassmorphic p-4 rounded-lg lg:!rounded-none lg:!rounded-l-lg">
-            <img src="/signup.png" alt="signup" className="object-cover  h-[400px]" />
+            <img src="/Logo.png" alt="logo" className="object-cover  h-[400px]" />
           </div>
 
           <form className="flex flex-col gap-7 items-start justify-center glassmorphic p-4 w-[320px] md:w-[380px] lg:w-[450px] rounded-lg lg:!rounded-none lg:!rounded-r-lg" onSubmit={handleSubmit}>

@@ -6,6 +6,8 @@ import useGetChatById from "../hooks/useGetChatById";
 import { MdLogout } from "react-icons/md";
 import useLogout from "../hooks/useLogout";
 import Spinner from "./Spinner";
+import { LuChartCandlestick } from "react-icons/lu";
+import { Link } from "react-router-dom";
 
 interface SidebarProps {
 	setMessages: React.Dispatch<React.SetStateAction<Messages>>;
@@ -41,6 +43,11 @@ const Sidebar = ({ setMessages }: SidebarProps) => {
 				<div className="text-lg font-normal">FinGPT</div>
 			</div>
 
+			<Link to="/stocks" className="p-4 flex items-center gap-2">
+				<LuChartCandlestick />
+				<h2 className="text-gray-400 text-sm uppercase">EXPLORE STOCKS</h2>
+			</Link>
+
 			<div className="flex-1 overflow-y-auto pb-40 px-4">
 				{loading ? (
 					<div className="mt-4 text-gray-400 text-sm">Loading chat history...</div>
@@ -57,7 +64,7 @@ const Sidebar = ({ setMessages }: SidebarProps) => {
 								{todayChats.map(chat => (
 									<button
 										key={chat.id}
-										className="w-full text-left p-2 bg-gray-800 rounded-md hover:bg-gray-700 mt-2 truncate cursor-pointer"
+										className="w-full text-left p-2 rounded-md hover:bg-gray-700 mt-2 truncate cursor-pointer"
 										title={chat.header}
 										onClick={() => {
 											fetchChat(chat.id);

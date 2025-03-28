@@ -133,7 +133,7 @@ const Chat = () => {
   console.log(messages);
 
   return (
-    <div className="flex h-screen max-h-screen w-full text-white bg-black overflow-hidden">
+    <div className="flex h-screen max-h-screen w-full text-white overflow-hidden">
       <AppNavbar
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
