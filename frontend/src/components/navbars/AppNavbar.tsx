@@ -4,6 +4,9 @@ import { TbLayoutSidebarLeftCollapse, TbLayoutSidebarRightCollapse } from "react
 import { FaChevronDown } from "react-icons/fa";
 import { useAuthContext } from "../../context/AuthContext";
 import getAuthInitials from "../../utils/getAuthInitials";
+import useCreateChatStream from "../../hooks/useCreateChatStream";
+import { Messages } from "../../types";
+import Spinner from "../Spinner";
 
 interface DropDownProps {
 	id: string;
@@ -14,9 +17,10 @@ interface DropDownProps {
 interface AppNavbarProps {
 	isSidebarOpen: boolean;
 	setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	setMessages: React.Dispatch<React.SetStateAction<Messages>>;
 }
 
-const AppNavbar = ({ isSidebarOpen, setIsSidebarOpen }: AppNavbarProps) => {
+const AppNavbar = ({ isSidebarOpen, setIsSidebarOpen, setMessages }: AppNavbarProps) => {
 	const dropdownOptions = [
 		{
 			id: "Gemini-2.0 flash",
@@ -33,12 +37,18 @@ const AppNavbar = ({ isSidebarOpen, setIsSidebarOpen }: AppNavbarProps) => {
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [selectedOption, setSelectedOption] = useState<DropDownProps>(dropdownOptions[1]);
 	const { authUser } = useAuthContext();
+	const { loading, createStream } = useCreateChatStream();
 
 	const handleSelect = (option: DropDownProps) => {
 		setSelectedOption(option);
 		setIsDialogOpen(false);
 		console.log("Selected Option:", option);
 	};
+
+	const handleCreateChatStream = async () => {
+		const data = await createStream();
+		setMessages(data);
+	}
 
 	return (
 		<div className="py-2 px-4 fixed left-0 top-0 w-full text-white flex items-center justify-between bg-transparent z-20">
@@ -50,8 +60,16 @@ const AppNavbar = ({ isSidebarOpen, setIsSidebarOpen }: AppNavbarProps) => {
 						<TbLayoutSidebarRightCollapse />
 					)}
 				</button>
-				<button className="border-none outline-none bg-transparent cursor-pointer text-xl md:text-2xl hover:bg-gray-700 p-1.5 md:p-2 rounded-md flex items-center justify-center">
-					<BiSolidEdit />
+				<button
+					className="border-none outline-none bg-transparent cursor-pointer text-xl md:text-2xl hover:bg-gray-700 p-1.5 md:p-2 rounded-md flex items-center justify-center"
+					disabled={loading}
+					onClick={handleCreateChatStream}
+				>
+					{loading ? (
+						<Spinner size="small" color="accent" />
+					) : (
+						<BiSolidEdit />
+					)}
 				</button>
 			</div>
 

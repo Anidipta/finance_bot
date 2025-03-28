@@ -137,6 +137,7 @@ const Chat = () => {
       <AppNavbar
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
+        setMessages={setMessages}
       />
 
       {isSidebarOpen && (
@@ -165,8 +166,8 @@ const Chat = () => {
                 <div
                   key={msg?._id}
                   className={`max-w-[95%] p-4 rounded-lg shadow-md ${msg?.sender === "user"
-                    ? "ml-auto bg-blue-600 text-right lg:max-w-[35%] md:max-w-[50%]"
-                    : "mr-auto bg-gray-700 text-left lg:max-w-[40%] md:max-w-[75%]"
+                    ? "ml-auto bg-blue-600 text-right lg:max-w-[30%] md:max-w-[50%]"
+                    : "mr-auto bg-gray-700 text-left lg:max-w-[55%] md:max-w-[75%]"
                     }`}
                 >
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>
