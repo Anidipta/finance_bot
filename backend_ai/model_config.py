@@ -4,6 +4,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnableLambda, RunnableBranch
 from tools import tools_for_market_agent, tools_for_personalized_agent
 
 load_dotenv()
@@ -12,6 +13,18 @@ model = None
 market_finance_agent_executor = None
 personalized_finance_agent_executor = None
 classification_chain = None
+
+# 🔒 Blacklist layer
+blacklisted_keywords = [
+    "torrent", "xxx", "porn", "hagu", "nsfw", "sex", "nude", "naked", "deepfake", "hentai",
+    "erotic", "adult", "camgirl", "webcam", "escort", "fetish", "incest", "lolita", "bdsm", "explicit",
+    "onlyfans", "hookup", "rape", "child porn", "cp", "dark web", "black market", "drugs", "weed", "marijuana",
+    "cocaine", "heroin", "lsd", "meth", "cheat code", "hack", "crack", "keygen", "serial key", "license bypass",
+    "phishing", "ddos", "ransomware", "scam", "scammer", "bitcoin fraud", "carding", "fake id", "identity theft", "spyware"
+]
+
+def is_blacklisted(query: str) -> bool:
+    return any(word in query.lower() for word in blacklisted_keywords)
 
 def initialize_models(input_model="gemini-2.0-flash") -> dict:
     global model, market_finance_agent_executor, personalized_finance_agent_executor, classification_chain
@@ -22,6 +35,12 @@ def initialize_models(input_model="gemini-2.0-flash") -> dict:
         max_completion_tokens=100
     )
 
+    # 🛑 Response when query is blacklisted
+    blacklist_response = RunnableLambda(
+        lambda x: "I'm sorry, but I cannot assist with that request."
+    )
+
+    # 🔤 CLASSIFICATION CHAIN
     classification_template = ChatPromptTemplate.from_messages(
         [
             (
@@ -42,8 +61,14 @@ def initialize_models(input_model="gemini-2.0-flash") -> dict:
             )
         ]
     )
-    classification_chain = classification_template | model | StrOutputParser()
+    normal_classification = classification_template | model | StrOutputParser()
 
+    classification_chain = RunnableBranch(
+        (lambda x: is_blacklisted(x["query"]), blacklist_response),
+        normal_classification
+    )
+
+    # 📘 GENERAL INFORMATION CHAIN
     general_information_template = ChatPromptTemplate.from_messages(
         [
             (
@@ -59,8 +84,12 @@ def initialize_models(input_model="gemini-2.0-flash") -> dict:
             )
         ]
     )
-    general_chain = general_information_template | model | StrOutputParser()
-    
+    general_chain = RunnableBranch(
+        (lambda x: is_blacklisted(x["input"]), blacklist_response),
+        general_information_template | model | StrOutputParser()
+    )
+
+    # 📊 MARKET FINANCE AGENT
     market_agent_prompt = ChatPromptTemplate.from_messages(
         [
             (
@@ -81,6 +110,7 @@ def initialize_models(input_model="gemini-2.0-flash") -> dict:
         tools=tools_for_market_agent
     )
 
+    # 🧠 PERSONALIZED FINANCE AGENT
     personalized_agent_prompt = ChatPromptTemplate.from_messages(
         [
             (
