@@ -30,7 +30,7 @@ async def process_chat(message: str, id: str) -> List[str]:
     response = None
     intent_lower = intent.lower()
     if "greeting" in intent_lower or "who are you" in intent_lower:
-        response = "Hello, my name is FinGPT, made by Team FinGPT."
+        response = "Hello, my name is FinGPT, made by Team Sniders."
     elif "personalized" in intent_lower:
         response = await handle_personalized_query(message, id)
     elif "real time" in intent_lower or "market" in intent_lower:
