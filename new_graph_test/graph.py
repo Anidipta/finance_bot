@@ -1,14 +1,16 @@
-
 import os
 import yfinance as yf
 from flask import Flask, render_template
 from flask_socketio import SocketIO
+from flask_cors import CORS
 from datetime import datetime
 import threading
 import time
 
 app = Flask(__name__, template_folder='templates')
-socketio = SocketIO(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 current_symbol = "NVDA"
 monitoring_thread = None
@@ -66,4 +68,4 @@ def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True, port=5000)
+    socketio.run(app, debug=True, host="0.0.0.0", port=3000)
