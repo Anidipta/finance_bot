@@ -10,12 +10,9 @@ ipykernel
 langchainhub
 yfinance
 plotly
-firebase
-firebase_admin
 fastapi
 uvicorn
-bcrypt
-passlib
-pyjwt
 flask
 flask-socketio
+pymongo
+python-dotenv

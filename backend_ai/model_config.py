@@ -1,12 +1,13 @@
+import os
+from dotenv import load_dotenv
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.output_parsers import StrOutputParser
-from tools import *
-import os
-from dotenv import load_dotenv
+from tools import tools_for_market_agent, tools_for_personalized_agent
 
 load_dotenv()
+
 model = None
 market_finance_agent_executor = None
 personalized_finance_agent_executor = None
@@ -14,15 +15,13 @@ classification_chain = None
 
 def initialize_models(input_model="gemini-2.0-flash") -> dict:
     global model, market_finance_agent_executor, personalized_finance_agent_executor, classification_chain
-    
+
     model = ChatGoogleGenerativeAI(
         model=input_model,
         temperature=0.1,
         max_completion_tokens=100
     )
 
-    # Classification chain prompt now explicitly restricts the output to four categories:
-    # "general", "personalized", "greeting", or "real time"
     classification_template = ChatPromptTemplate.from_messages(
         [
             (
@@ -45,7 +44,6 @@ def initialize_models(input_model="gemini-2.0-flash") -> dict:
     )
     classification_chain = classification_template | model | StrOutputParser()
 
-    # General information prompt for general queries.
     general_information_template = ChatPromptTemplate.from_messages(
         [
             (
@@ -63,7 +61,6 @@ def initialize_models(input_model="gemini-2.0-flash") -> dict:
     )
     general_chain = general_information_template | model | StrOutputParser()
     
-    # Market agent prompt for real-time market data queries.
     market_agent_prompt = ChatPromptTemplate.from_messages(
         [
             (
@@ -84,7 +81,6 @@ def initialize_models(input_model="gemini-2.0-flash") -> dict:
         tools=tools_for_market_agent
     )
 
-    # Personalized agent prompt for personalized queries.
     personalized_agent_prompt = ChatPromptTemplate.from_messages(
         [
             (
