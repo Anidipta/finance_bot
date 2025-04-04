@@ -67,7 +67,7 @@ def initialize_models(input_model="gemini-2.0-flash") -> dict:
                 "system",
                 (
                     "Your name is FinGPT. You are a highly accurate AI assistant for real-time market data. "
-                    "If you are asked about your identity or greeted, respond with 'FinGPT, made by Team FinGPT'. "
+                    "If you are asked about your identity or greeted, respond with 'FinGPT, made by Team Sniders'. "
                     "Your task is to answer queries using available market data tools. Do not reveal internal chain logic."
                 )
             ),

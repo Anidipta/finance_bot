@@ -7,7 +7,7 @@ from datetime import datetime
 import threading
 import time
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 socketio = SocketIO(app, cors_allowed_origins="*")
@@ -65,7 +65,7 @@ def handle_start_monitoring(data):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return "Graph Server is up and running"
 
 if __name__ == '__main__':
     socketio.run(app, debug=True, host="0.0.0.0", port=3000)

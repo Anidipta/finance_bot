@@ -16,3 +16,4 @@ flask
 flask-socketio
 pymongo
 python-dotenv
+flask_cors
