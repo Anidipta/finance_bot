@@ -1,9 +1,11 @@
 import { useState } from "react"
 import toast from "react-hot-toast";
+import { useAuthContext } from "../context/AuthContext";
 
 const useGetResponse = () => {
     const [loading, setLoading] = useState(false);
     const apiUrl = import.meta.env.VITE_ML_URL;
+    const { authUser } = useAuthContext();
 
     const getResponse = async (message: string) => {
         setLoading(true);
@@ -14,7 +16,7 @@ const useGetResponse = () => {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${localStorage.getItem("FGPT-token")}`
                 },
-                body: JSON.stringify({message})
+                body: JSON.stringify({ message, id: authUser?._id })
             });
             const data = await res.json();
 
