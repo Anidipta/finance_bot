@@ -71,9 +71,6 @@ FinGPT is a **GenAI-Powered Financial Assistant** that:
 ---
 
 ## 📊 SWOT Analysis
-
-<h3>📊 SWOT Analysis</h3>
-
 <table>
   <tr>
     <th style="background-color:#d4edda;">🟩 Strengths</th>
@@ -146,8 +143,6 @@ FinGPT is a **GenAI-Powered Financial Assistant** that:
 ├── GenAI-Powered Financial Assistant.pdf   # Project documentation (PDF)
 ├── README.md                                # Main project documentation
 ```
-
----
 
 ## 🚀 How to Run
 
