@@ -1,118 +1,211 @@
-# FinGPT - AI-Powered Financial Assistant
+# 💸 **FinGPT - AI-Powered Financial Assistant**
+### Team Sniders
+---
 
-## Table of Contents
-1. [Introduction](#introduction)
-2. [Unique Selling Proposition (USP)](#unique-selling-proposition)
-3. [Problem Statement](#problem-statement)
-4. [Market Opportunity](#market-opportunity)
-5. [Solution Overview](#solution-overview)
-6. [Technology Stack](#technology-stack)
-7. [SWOT Analysis](#swot-analysis)
-8. [Project Structure](#project-structure)
-9. [How to Run](#how-to-run)
-10. [Contributors](#contributors)
+## 📑 Table of Contents
+1. [🔍 Introduction](#introduction)  
+2. [🌟 Unique Selling Proposition (USP)](#usp)  
+3. [❓ Problem Statement](#problem-statement)   
+5. [🛠️ Solution Overview](#solution-overview)  
+6. [🧠 Features & Capabilities](#features--capabilities)  
+7. [🧰 Technology Stack](#technology-stack)  
+8. [📊 SWOT Analysis](#swot-analysis)  
+9. [📁 Project Structure](#project-structure)  
+10. [🚀 How to Run](#how-to-run)  
+11. [👨‍💻 Contributors](#contributors)  
 
-## Introduction
-India has hundreds of millions of new investors, but financial literacy remains low. There is no scalable way to educate and guide these users. Manual advisory is impractical, and existing platforms focus on experienced investors.
+---
 
-## Unique Selling Proposition (USP)
-✅ 100% Free Google Tools – No payments required, forever scalable.  
-✅ Serverless Deployment – No hosting cost using Firebase.  
-✅ Real-time Market Insights – Using Google Finance API.  
-✅ Multi-Language Support – Gemini AI understands local languages.  
-✅ Privacy Focused – No sensitive data stored beyond chat history.  
-✅ Personalized Investment Recommendations – AI-driven tailored suggestions.  
-✅ Simplified Learning – Financial education without jargon.  
+## 🔍 Introduction
+India is witnessing a surge of new investors—millions stepping into the world of finance. Yet, **financial literacy** remains alarmingly low. Manual advisory isn’t scalable, and most platforms only cater to seasoned investors. That’s where **FinGPT** steps in — an intelligent, accessible, and **AI-powered financial assistant** designed for **everyone.**
 
-## Problem Statement
-Many new investors in India lack financial literacy and are unable to make informed investment decisions. Existing solutions cater to experienced investors, leaving a massive gap in accessible, beginner-friendly financial guidance.
+---
 
-## Market Opportunity
-- India has over **200 million retail investors**, growing rapidly due to digital platforms.
-- Financial literacy remains **below 30%**, creating a need for educational tools.
-- The mutual fund industry in India is worth **₹40 trillion+** and continues to expand.
-- **Mobile-first financial services** are in high demand, with increasing smartphone penetration.
+## 🌟 Unique Selling Proposition (USP)
+✅ **100% Free & Scalable** – Powered by Google tools, no fees or hidden charges  
+✅ **Serverless Deployment** – Hosted on Firebase with zero infrastructure cost  
+✅ **Real-Time Insights** – Instant stock data from Yahoo Finance & Google Finance  
+✅ **Multi-Language Support** – Chat in **any Indian language** via Gemini AI  
+✅ **Privacy-Focused** – No personal data stored beyond chat history  
+✅ **Personalized Investment Suggestions** – Smart AI-driven recommendations  
+✅ **Jargon-Free Learning** – Simplified finance for absolute beginners  
 
-## Solution Overview
-We are building a GenAI-powered Financial Assistant that:
-- Answers investment-related questions in simple language.
-- Guides users on financial literacy without technical jargon.
-- Suggests suitable investment options based on their needs.
-- Provides real-time market insights using free Google tools.
-- Ensures scalability and accessibility without paid APIs or infrastructure.
+---
 
-## Technology Stack
-| Component                 | Google Free Tool Used            | Purpose |
-|---------------------------|--------------------------------|--------------------------------------------------|
-| Conversational AI         | Google Gemini API             | AI-powered chatbot for answering finance questions. |
-| Chat Interface           | Google Dialogflow CX          | Manages structured conversations with users. |
-| Hosting & Deployment     | Google Firebase Hosting      | Deploys the web & mobile app without server costs. |
-| Backend Processing       | Google Cloud Functions       | Executes AI queries dynamically. |
-| User Data Storage        | Google Firestore             | Stores user interactions, preferences, and chat history. |
-| Market Insights         | Yahoo Finance API | Retrieves live stock market & mutual fund data. |
-| Data Analysis           | Google Colab                 | Performs financial trend analysis using Python. |
-| User Interaction Analytics | Google Analytics           | Tracks user engagement & app performance. |
-| Dashboard & Reports     | Google Looker Studio        | Creates reports for insights on user behavior. |
+## ❓ Problem Statement
+🚫 New investors struggle with:
+- Low financial literacy
+- Confusing jargon
+- Lack of personalized support
+- Overwhelming or technical platforms
 
-## SWOT Analysis
-### Strengths
-- Fully automated and AI-powered financial assistant.
-- Uses **free, serverless** Google tools, making it cost-effective.
-- Provides **real-time market insights** and personalized recommendations.
-- Supports **multi-language** interactions for broader accessibility.
+💡 **FinGPT** aims to make **finance simple, smart, and accessible** to the masses.
 
-### Weaknesses
-- Relies on Google’s ecosystem, which may limit customization.
-- No direct trading functionality (only educational guidance and recommendations).
+---
 
-### Opportunities
-- Huge market of **new investors** in need of financial education.
-- Can expand to WhatsApp, Google Assistant, and voice-based services.
-- Potential for monetization via premium advisory features.
+## 🛠️ Solution Overview
+FinGPT is a **GenAI-Powered Financial Assistant** that:
 
-### Threats
-- Competition from established fintech apps with integrated trading services.
-- Regulatory changes in financial advisory laws.
+💬 Answers investment questions in **simple, conversational language**  
+📉 Shows **real-time stock data** and **interactive charts**  
+📈 Predicts trends with live **buy/sell** suggestions  
+🌐 Supports **multilingual** chats (all Indian languages)  
+🔒 Keeps user data **private & secure**  
+📚 Educates users **without technical jargon**
 
-## Project Structure
+---
+
+## 🧠 Features & Capabilities
+✨ Built on top of **Google Gemini AI**, FinGPT can:
+
+🔹 **Classify user queries** into investment-related intents  
+🔹 Provide **live stock prices**, graphs, and charts  
+🔹 Generate **stock predictions** and personalized tips  
+🔹 Offer **buy/sell suggestions** securely  
+🔹 Speak **any Indian language**  
+🔹 Send **friendly, beautified replies** for a smooth user experience  
+
+---
+
+## 🧰 Technology Stack
+
+| 🧩 Component                | 🔧 Tool/Technology Used                             | 💡 Purpose                                           |
+|----------------------------|-----------------------------------------------------|------------------------------------------------------|
+| Conversational AI          | Google Gemini + LangChain                           | Smart finance chat assistant                         |
+| NLP & Intent Classification| Google Dialogflow CX                                | Handling chat flows and intents                      |
+| Chat Interface              | React + TypeScript                                  | Frontend chatbot interface                           |
+| Hosting & Backend          | Google Cloud Functions    | Serverless deployment & backend logic                |
+| Data Storage               | MongoDB                                 | User history & preferences                           |
+| Market Insights            | Yahoo Finance API            | Live stock & mutual fund data                        |
+| Visualization & Charts     | Google Sheets + Chart.js / Plotly                   | Interactive charts & graphs                          |
+| Financial Data Analysis    | Python + Google Colab                               | AI model training and data crunching                 |
+| Realtime Analytics         | Google Analytics             | Track engagement and visualize performance           |
+| APIs                       | FastAPI                                             | Custom endpoints for finance processing              |
+
+---
+
+## 📊 SWOT Analysis
+
+<h3>📊 SWOT Analysis</h3>
+
+<table>
+  <tr>
+    <th style="background-color:#d4edda;">🟩 Strengths</th>
+    <th style="background-color:#f8d7da;">🟥 Weaknesses</th>
+  </tr>
+  <tr>
+    <td>
+      ✅ Fully AI-powered and automated financial assistant<br>
+      ✅ Cost-effective with free, serverless tools (Dialogflow, Gemini)<br>
+      ✅ Real-time market insights and personalized recommendations<br>
+      ✅ Supports multilingual interactions (all major Indian languages)
+    </td>
+    <td>
+      ⚠️ Dependent on Google’s ecosystem – limited customization<br>
+      ⚠️ No direct trading functionality – purely advisory
+    </td>
+  </tr>
+  <tr>
+    <th style="background-color:#fff3cd;">🟨 Opportunities</th>
+    <th style="background-color:#d1ecf1;">🟦 Threats</th>
+  </tr>
+  <tr>
+    <td>
+      🚀 Massive market of untapped new investors in need of financial guidance<br>
+      📱 Expansion to WhatsApp, Google Assistant, and voice platforms<br>
+      💼 Potential monetization via premium insights and advisory tiers
+    </td>
+    <td>
+      🧠 Competition from large fintechs with integrated trading & advisory platforms<br>
+      ⚖️ Regulatory shifts in financial advisory laws
+    </td>
+  </tr>
+</table>
+
+
+---
+
+## 📁 Project Structure
 ```
-├── /src                 # Main source code
-│   ├── /components      # UI components for chatbot
-│   ├── /services        # API calls and data processing
-│   ├── /utils           # Utility functions for AI & finance calculations
-├── /public              # Static assets
-├── /firebase            # Firebase cloud functions & hosting configuration
-├── README.md            # Project documentation
+├── backend/                      # Backend for managing APIs and logic
+│   ├── src/                     # Backend source files
+│   ├── package.json             # Backend dependencies
+│   ├── tsconfig.json            # TypeScript config for backend
+
+├── backend_ai/                  # AI engine for Gemini-based financial assistant
+│   ├── app.py                   # Main Flask/FastAPI application entry point
+│   ├── model.py                 # AI model logic and setup
+│   ├── model_config.py          # Configuration for model parameters
+│   ├── requirements.txt         # Python package dependencies
+│   ├── tools.py                 # Utility tools for AI processing
+│   └── .gitignore               # Git ignore rules for backend_ai
+
+├── frontend/                    # Frontend UI of the application
+│   ├── public/                  # Static assets (icons, images, etc.)
+│   ├── src/                     # Frontend source code (TypeScript)
+│   ├── .gitignore               # Git ignore rules for frontend
+│   ├── README.md                # Frontend-specific README
+│   ├── eslint.config.js         # ESLint configuration
+│   ├── index.html               # Root HTML file
+│   ├── package.json             # Frontend dependencies
+│   ├── tsconfig.app.json        # TypeScript config for app
+│   ├── tsconfig.json            # General TypeScript config
+│   ├── tsconfig.node.json       # TypeScript config for node scripts
+│   └── vite.config.ts           # Vite config for development server
+
+├── graph/                       # Data visualization and stock graph generation
+│   ├── graph.py                 # Script for plotting live charts and predictions
+│   └── .gitignore               # Git ignore rules for graph module
+
+├── GenAI-Powered Financial Assistant.pdf   # Project documentation (PDF)
+├── README.md                                # Main project documentation
 ```
 
-## How to Run
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-repo/GenAI-Financial-Assistant.git
-   cd GenAI-Financial-Assistant
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Set up Firebase:
-   - Create a Firebase project.
-   - Enable Firestore and Hosting.
-   - Deploy using:
-   ```bash
-   firebase deploy
-   ```
-4. Start the development server:
-   ```bash
-   npm start
-   ```
+---
 
-## Contributors
-| Name        | Role                   | GitHub Profile  |
-|------------|------------------------|-----------------|
-| Sagnik Basak | Project Lead           | [GitHub](https://github.com/user1) |
-| Anidipta Pal | AI & Backend Developer | [GitHub](https://github.com/user2) |
-| Tamojit Das | Frontend Developer    | [GitHub](https://github.com/user3) |
-| Tutas Khabiraj | Data Analyst          | [GitHub](https://github.com/user4) |
+## 🚀 How to Run
 
+1. **Clone the repository:**
+```bash
+git clone https://github.com/SagnikBasak04/finance_bot.git
+cd finance_bot
+```
 
+2. **Run the AI Agent server:**
+```bash
+cd backend_ai
+pip install -r requirements.txt
+python app.py
+```
+
+3. **Run the Graph server:**
+```bash
+cd ../graph
+pip install -r requirements.txt
+python graph.py
+```
+
+4. **Run the backend server:**
+```bash
+cd ../backend
+npm install
+npm run dev
+```
+
+5. **Run the frontend server:**
+```bash
+cd ../frontend
+npm install
+npm run dev
+```
+
+---
+
+## 👨‍💻 Contributors
+
+| 👤 Name           | 💼 Role                    | 🔗 GitHub             |
+|------------------|----------------------------|------------------------|
+| **Sagnik Basak** | Project Lead               | [GitHub](https://github.com/SagnikBasak04)            |
+| **Anidipta Pal** | AI & Backend Developer     | [GitHub](https://github.com/Anidipta) |
+| **Tamojit Das**  | Full-Stack Developer         | [GitHub](https://github.com/Tamoziit)            |
+| **Tutas Khabiraj** | Data Analyst             | [GitHub](https://github.com/Bru48)            |
