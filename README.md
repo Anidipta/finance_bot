@@ -2,20 +2,6 @@
 ### Team Sniders
 ---
 
-## 📑 Table of Contents
-1. [🔍 Introduction](#introduction)  
-2. [🌟 Unique Selling Proposition (USP)](#usp)  
-3. [❓ Problem Statement](#problem-statement)   
-5. [🛠️ Solution Overview](#solution-overview)  
-6. [🧠 Features & Capabilities](#features--capabilities)  
-7. [🧰 Technology Stack](#technology-stack)  
-8. [📊 SWOT Analysis](#swot-analysis)  
-9. [📁 Project Structure](#project-structure)  
-10. [🚀 How to Run](#how-to-run)  
-11. [👨‍💻 Contributors](#contributors)  
-
----
-
 ## 🔍 Introduction
 India is witnessing a surge of new investors—millions stepping into the world of finance. Yet, **financial literacy** remains alarmingly low. Manual advisory isn’t scalable, and most platforms only cater to seasoned investors. That’s where **FinGPT** steps in — an intelligent, accessible, and **AI-powered financial assistant** designed for **everyone.**
 
