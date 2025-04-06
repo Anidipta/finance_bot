@@ -8,13 +8,12 @@ India is witnessing a surge of new investors—millions stepping into the world 
 ---
 
 ## 🌟 Unique Selling Proposition (USP)
-✅ **100% Free & Scalable** – Powered by Google tools, no fees or hidden charges  
-✅ **Serverless Deployment** – Hosted on Firebase with zero infrastructure cost  
-✅ **Real-Time Insights** – Instant stock data from Yahoo Finance & Google Finance  
-✅ **Multi-Language Support** – Chat in **any Indian language** via Gemini AI  
-✅ **Privacy-Focused** – No personal data stored beyond chat history  
-✅ **Personalized Investment Suggestions** – Smart AI-driven recommendations  
-✅ **Jargon-Free Learning** – Simplified finance for absolute beginners  
+✅ **100% Free & Scalable** – Powered by Google tools, no fees or hidden charges. 
+✅ **Real-Time Insights** – Instant stock data from Yahoo Finance & Google Finance.
+✅ **Multi-Language Support** – Chat in **any Indian language** via Gemini AI.  
+✅ **Privacy-Focused** – No personal data stored beyond chat history.  
+✅ **Personalized Investment Suggestions** – Smart AI-driven recommendations. 
+✅ **Jargon-Free Learning** – Simplified finance for absolute beginners.  
 
 ---
 
@@ -34,8 +33,7 @@ FinGPT is a **GenAI-Powered Financial Assistant** that:
 
 💬 Answers investment questions in **simple, conversational language**  
 📉 Shows **real-time stock data** and **interactive charts**  
-📈 Predicts trends with live **buy/sell** suggestions  
-🌐 Supports **multilingual** chats (all Indian languages)  
+📈 Predicts trends with live **buy/sell** suggestions   
 🔒 Keeps user data **private & secure**  
 📚 Educates users **without technical jargon**
 
@@ -46,9 +44,7 @@ FinGPT is a **GenAI-Powered Financial Assistant** that:
 
 🔹 **Classify user queries** into investment-related intents  
 🔹 Provide **live stock prices**, graphs, and charts  
-🔹 Generate **stock predictions** and personalized tips  
-🔹 Offer **buy/sell suggestions** securely  
-🔹 Speak **any Indian language**  
+🔹 Generate **stock predictions** and personalized tips 
 🔹 Send **friendly, beautified replies** for a smooth user experience  
 
 ---
@@ -58,15 +54,14 @@ FinGPT is a **GenAI-Powered Financial Assistant** that:
 | 🧩 Component                | 🔧 Tool/Technology Used                             | 💡 Purpose                                           |
 |----------------------------|-----------------------------------------------------|------------------------------------------------------|
 | Conversational AI          | Google Gemini + LangChain                           | Smart finance chat assistant                         |
-| NLP & Intent Classification| Google Dialogflow CX                                | Handling chat flows and intents                      |
+| NLP & Intent Classification| Fine-tuned Google Gemini + LangChain                                | Handling chat flows and intents                      |
 | Chat Interface              | React + TypeScript                                  | Frontend chatbot interface                           |
-| Hosting & Backend          | Google Cloud Functions    | Serverless deployment & backend logic                |
 | Data Storage               | MongoDB                                 | User history & preferences                           |
 | Market Insights            | Yahoo Finance API            | Live stock & mutual fund data                        |
-| Visualization & Charts     | Google Sheets + Chart.js / Plotly                   | Interactive charts & graphs                          |
+| Visualization & Charts     | Google Sheets + Plotly                   | Interactive charts & graphs                          |
 | Financial Data Analysis    | Python + Google Colab                               | AI model training and data crunching                 |
 | Realtime Analytics         | Google Analytics             | Track engagement and visualize performance           |
-| APIs                       | FastAPI                                             | Custom endpoints for finance processing              |
+| APIs Integration                     | FastAPI                                             | Custom endpoints for NLP Chatbot              |
 
 ---
 
@@ -79,9 +74,8 @@ FinGPT is a **GenAI-Powered Financial Assistant** that:
   <tr>
     <td>
       ✅ Fully AI-powered and automated financial assistant<br>
-      ✅ Cost-effective with free, serverless tools (Dialogflow, Gemini)<br>
+      ✅ Cost-effective with free, serverless tools (Gemini)<br>
       ✅ Real-time market insights and personalized recommendations<br>
-      ✅ Supports multilingual interactions (all major Indian languages)
     </td>
     <td>
       ⚠️ Dependent on Google’s ecosystem – limited customization<br>
@@ -110,7 +104,7 @@ FinGPT is a **GenAI-Powered Financial Assistant** that:
 
 ## 📁 Project Structure
 ```
-├── backend/                      # Backend for managing APIs and logic
+├── backend/                     # Backend for managing APIs and logic
 │   ├── src/                     # Backend source files
 │   ├── package.json             # Backend dependencies
 │   ├── tsconfig.json            # TypeScript config for backend
@@ -162,7 +156,6 @@ python app.py
 3. **Run the Graph server:**
 ```bash
 cd ../graph
-pip install -r requirements.txt
 python graph.py
 ```
 
@@ -186,7 +179,7 @@ npm run dev
 
 | 👤 Name           | 💼 Role                    | 🔗 GitHub             |
 |------------------|----------------------------|------------------------|
-| **Sagnik Basak** | Project Lead               | [GitHub](https://github.com/SagnikBasak04)            |
+| **Tamojit Das**  | Full-Stack Developer & Team Lead       | [GitHub](https://github.com/Tamoziit)            |
+| **Sagnik Basak** | AI Engineer & Data Analyst     | [GitHub](https://github.com/SagnikBasak04)            |
 | **Anidipta Pal** | AI & Backend Developer     | [GitHub](https://github.com/Anidipta) |
-| **Tamojit Das**  | Full-Stack Developer         | [GitHub](https://github.com/Tamoziit)            |
-| **Tutas Khabiraj** | Data Analyst             | [GitHub](https://github.com/Bru48)            |
+| **Titas Kabiraj** | UI-UX & Frontend Developer            | [GitHub](https://github.com/titas-kabiraj)            |
