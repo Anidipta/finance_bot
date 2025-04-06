@@ -9,10 +9,15 @@ India is witnessing a surge of new investors—millions stepping into the world 
 
 ## 🌟 Unique Selling Proposition (USP)
 ✅ **100% Free & Scalable** – Powered by Google tools, no fees or hidden charges. 
+
 ✅ **Real-Time Insights** – Instant stock data from Yahoo Finance & Google Finance.
+
 ✅ **Multi-Language Support** – Chat in **any Indian language** via Gemini AI.  
+
 ✅ **Privacy-Focused** – No personal data stored beyond chat history.  
+
 ✅ **Personalized Investment Suggestions** – Smart AI-driven recommendations. 
+
 ✅ **Jargon-Free Learning** – Simplified finance for absolute beginners.  
 
 ---
@@ -54,14 +59,14 @@ FinGPT is a **GenAI-Powered Financial Assistant** that:
 | 🧩 Component                | 🔧 Tool/Technology Used                             | 💡 Purpose                                           |
 |----------------------------|-----------------------------------------------------|------------------------------------------------------|
 | Conversational AI          | Google Gemini + LangChain                           | Smart finance chat assistant                         |
-| NLP & Intent Classification| Fine-tuned Google Gemini + LangChain                                | Handling chat flows and intents                      |
-| Chat Interface              | React + TypeScript                                  | Frontend chatbot interface                           |
-| Data Storage               | MongoDB                                 | User history & preferences                           |
-| Market Insights            | Yahoo Finance API            | Live stock & mutual fund data                        |
-| Visualization & Charts     | Google Sheets + Plotly                   | Interactive charts & graphs                          |
-| Financial Data Analysis    | Python + Google Colab                               | AI model training and data crunching                 |
-| Realtime Analytics         | Google Analytics             | Track engagement and visualize performance           |
-| APIs Integration                     | FastAPI                                             | Custom endpoints for NLP Chatbot              |
+| NLP & Intent Classification| Fine-tuned Google Gemini + LangChain                | Handling chat flows and intents                      |
+| Chat Interface              | React + TypeScript                                 | Frontend chatbot interface                           |
+| Data Storage               | MongoDB                      | User history & preferences                 |
+| Market Insights            | Yahoo Finance API            | Live stock & mutual fund data              |
+| Visualization & Charts     | Google Sheets + Plotly       | Interactive charts & graphs                |
+| Financial Data Analysis    | Python + Google Colab        | AI model training and data crunching       |
+| Realtime Analytics         | Google Analytics             | Track engagement and visualize performance |
+| APIs Integration           | FastAPI                      | Custom endpoints for NLP Chatbot           |
 
 ---
 
@@ -179,7 +184,7 @@ npm run dev
 
 | 👤 Name           | 💼 Role                    | 🔗 GitHub             |
 |------------------|----------------------------|------------------------|
-| **Tamojit Das**  | Full-Stack Developer & Team Lead       | [GitHub](https://github.com/Tamoziit)            |
+| **Tamojit Das** (Team Lead)  | Full-Stack Developer        | [GitHub](https://github.com/Tamoziit)            |
 | **Sagnik Basak** | AI Engineer & Data Analyst     | [GitHub](https://github.com/SagnikBasak04)            |
 | **Anidipta Pal** | AI & Backend Developer     | [GitHub](https://github.com/Anidipta) |
 | **Titas Kabiraj** | UI-UX & Frontend Developer            | [GitHub](https://github.com/titas-kabiraj)            |
