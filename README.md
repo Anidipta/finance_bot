@@ -48,8 +48,11 @@ FinGPT is a **GenAI-Powered Financial Assistant** that:
 ✨ Built on top of **Google Gemini AI**, FinGPT can:
 
 🔹 **Classify user queries** into investment-related intents  
+
 🔹 Provide **live stock prices**, graphs, and charts  
+
 🔹 Generate **stock predictions** and personalized tips 
+
 🔹 Send **friendly, beautified replies** for a smooth user experience  
 
 ---
